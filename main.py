@@ -47,3 +47,20 @@ def get_all_items():
     res_data = helper.get_all_items()
     response = Response(json.dumps(res_data), mimetype='application/json')
     return response
+
+
+@app.route('/item/update', methods=['PUT'])
+def update_status():
+    req_data = request.get_json()
+    item = req_data['item']
+    status = req_data['status']
+
+    res_data = helper.update_status(item, status)
+
+    if res_data is None:
+        response = Response("{'error': 'Error updating item -'" + item + ", " + status + "}", status=400, mimetype='application/json')
+        return response
+
+    response = Response(json.dumps(res_data), mimetype='application/json')
+
+    return response
