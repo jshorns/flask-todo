@@ -64,4 +64,14 @@ def update_status(item, status):
         return None
 
 
+def delete_item(item):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute('delete from items where item=?', (item,))
+        conn.commit()
+        return {'item': item}
+    except Exception as e:
+        print('Error: ', e)
+        return None
 
